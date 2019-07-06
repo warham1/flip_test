@@ -1,0 +1,10 @@
+span {
+    width:100px;
+    height:100px;
+}
+
+.tile-container {
+    width:404px;
+    height:404px;
+    margin:0 auto;
+}
