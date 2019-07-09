@@ -36,7 +36,6 @@ const View = () => (
                 updateQuery: (prev, { subscriptionData}) => {
                     if(!subscriptionData.data) return prev;
                     const { onChangeTile } = subscriptionData.data;
-                    console.log(onChangeTile);
                     prev.getTiles[onChangeTile.id].tileColor = onChangeTile.tileColor;
                     return {
                         ...prev

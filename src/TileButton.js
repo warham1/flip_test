@@ -6,8 +6,7 @@ import "./TileButton.css"
 const update_Tile = gql`
     mutation UpdateTile($tileId: Int!, $tileColor: Int!) {
         updateTile(tileId: $tileId, tileColor: $tileColor) {
-            id,
-            tileColor
+            val
         }
     }
 `;
@@ -62,7 +61,9 @@ class TileButton extends Component {
                             const temp = this.changeColor(this.state.tileColor);
                             this.setState({tileColor:temp});
                             updateTile({ variables: { tileId : this.state.tileId,
-                                                        tileColor: temp}});
+                                                        tileColor: temp}}).then(({data}) => console.log('ret', data)
+                                                        );
+                            
                         } }
 
                         style={{background: getColor(tileColorProp)}}>
