@@ -12,12 +12,16 @@ type Tile {
     id: Int!
     tileColor: Int!
 }
+
+type Result {
+    val: String!
+}
 type Query {
-    getTiles: [Tile]!
+    getTiles(id: Int): [Tile]
 }
 type Mutation {
     newTile(tileColor: Int!): String!
-    updateTile(tileId: Int!, tileColor: Int!): Tile
+    updateTile(tileId: Int!, tileColor: Int!): Result
 }
 type Subscription {
     newTile: Tile
@@ -27,8 +31,15 @@ type Subscription {
 
 const resolvers = {
     Query: {
-        getTiles: () => {
-            return tiles;
+        getTiles: (_, {id}) => {
+            if(id === undefined)
+                return tiles;
+
+            const tile = find(tiles, { id: id});
+            const temp = [];
+            temp.push(tile);
+            
+            return temp;
         }
     },
     Mutation: {
@@ -47,7 +58,9 @@ const resolvers = {
             tile.tileColor = tileColor;
 
             pubsub.publish(CHG_TILE,  {onChangeTile: tile} );
-            return tile;
+
+            const result = {val: "YES"};
+            return result;
         }
     },
     Subscription: {
